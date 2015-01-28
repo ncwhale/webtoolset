@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+require('coffee-script');
+require('coffee-script/register');
+
+debug = require('debug')('app::db_init');
+
+m = require('../models');
+
+m.sequelize.sync({force: true})
+    .error(function(err){
+        debug("Error occured while creating data:", err);
+    })
+    .then(function(){
+        debug("Table created success.");
+        
+	      // Create default user.
+        var user = m.User.build({mail: 'test@someone.com'});
+	      user.salt = Date.now();
+	      user.password = 'test';
+	      return user.save();
+    }).then(function(user){
+        debug("User Saved.", user.id);
+        var role = m.Role.build({UserId: user.id, rule:'*'});
+        //role.setUser(user);
+        debug("Role create", role);
+        return role.save();
+    }).error(function(err){
+        debug("Error occured while creating data:", err);
+    });

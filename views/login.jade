@@ -1,0 +1,46 @@
+extends modals/layout
+
+block prerender
+  - title = "Login"
+
+block style
+  link(rel='stylesheet', href='/css/formValidation.min.css')
+
+block script
+
+block content
+  .container
+    .row
+      .col-xs-12
+        form#login-form.form-horizontal(role="form", data-abide='', method='post', novalidate)
+          fieldset
+            legend System Login
+            .form-group
+              label.col-sm-4.control-label
+                | Login ID *
+              .col-sm-4
+                input.form-control#userid(type="email", name="user", required, 
+                  placeholder="Your email address",
+                  data-fv-notempty="true"
+                  )
+            .form-group
+              label.col-sm-4.control-label
+                | Password *
+              .col-sm-4
+                input.form-control#password(type="password", name="password", required, 
+                  placeholder="Your password",
+                  minlength=3,
+                  data-fv-notempty="true"
+                  data-bv-notempty-message="Can not be empty")
+            .form-group
+              p.col-lg-12.text-center
+                | Your IP address 
+                span.ip= IP
+                |  will be record and use to verify when you login.
+          //- fieldset
+
+          .form-group
+            .col-lg-12
+              button.btn.btn-default.btn-block(type='submit') Login
+
+

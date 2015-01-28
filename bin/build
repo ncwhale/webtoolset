@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#Goto $project/bin dir.
+cd "$(dirname $(readlink -f $0))"
+
+#Goto coffee dir.
+cd ../public/coffee
+coffee -bcm --no-header -o ../js/ .
+

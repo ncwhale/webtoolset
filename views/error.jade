@@ -1,0 +1,13 @@
+extends modals/tiny-layout
+
+block prerender
+  - if (title == null)  { title = message; }
+  - if (stack == null)  { stack = []; }
+  - if (status == null) { status = 500; }
+
+block content
+  pre
+    h1= message
+    h2= status
+  hr
+  pre #{stack}
